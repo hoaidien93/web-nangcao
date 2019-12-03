@@ -6,7 +6,7 @@ class HomeComponent extends React.Component {
         return (
             <div class="homePage">
                 {this.renderRedirect()}
-                HomeComponent
+                HomeComponent For {}
             </div>
         );
     }
