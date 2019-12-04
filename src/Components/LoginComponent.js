@@ -1,37 +1,43 @@
 import React from 'react';
 import '../Assets/login.css';
+import $ from 'jquery';
+import Request from '../API/Request';
 
 class LoginComponent extends React.Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
         return (
-            <div class="limiter">
-                <div class="container-login100" >
-                    <div class="wrap-login100">
-                        <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/login" method="POST">
-                            <span class="login100-form-title">
+            <div className="limiter">
+                <div className="container-login100" >
+                    <div className="wrap-login100">
+                        <form className="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/login" method="POST">
+                            <span className="login100-form-title">
                                 Đăng nhập
                             </span>
-                            <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
-                                <input required class="input100" type="text" name="username" placeholder="Tên tài khoản" />
-                                <span class="focus-input100"></span>
+                            <div className="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+                                <input required className="input100" type="text" name="username" id="email" placeholder="Email" />
+                                <span className="focus-input100"></span>
                             </div>
-                            <div class="wrap-input100 validate-input" data-validate="Please enter password">
-                                <input required class="input100" type="password" name="pass" placeholder="Mật khẩu" />
-                                <span class="focus-input100"></span>
+                            <div className="wrap-input100 validate-input" data-validate="Please enter password">
+                                <input required className="input100" type="password" name="pass" id="password" placeholder="Mật khẩu" />
+                                <span className="focus-input100"></span>
                             </div>
-                            <div class="text-right p-t-13 p-b-23">
+                            <div className="text-right p-t-13 p-b-23">
                                
                             </div>
-                            <div class="container-login100-form-btn">
-                                <button class="login100-form-btn">
+                            <div className="container-login100-form-btn">
+                                <button className="login100-form-btn" onClick={(e)=>this.handleLogin(e)}>
                                     Đăng nhập
 						        </button>
                             </div>
-                            <div class="flex-col-c p-t-50 p-b-20">
-                                <span class="txt1 p-b-9">
+                            <div className="flex-col-c p-t-50 p-b-20">
+                                <span className="txt1 p-b-9">
                                     Bạn chưa có tài khoản ?
 						        </span>
-                                <a href="/register" class="txt3">
+                                <a href="/register" className="txt3">
                                     Đăng ký
 						        </a>
                             </div>
@@ -42,6 +48,26 @@ class LoginComponent extends React.Component {
         );
     }
 
+    handleLogin(e){
+        e.preventDefault();
+        let email = $("#email");
+        let password = $("#password");
+
+        Request.sendAPI('login',{
+            email: email,
+            password: password,
+        },(res)=>{
+            if(res.status === 200){
+                window.localStorage.setItem('email',email);
+                window.localStorage.setItem('token',res.token);
+                window.localStorage.setItem('role',res.role);
+                this.props.history.push('/');
+            }
+            else{
+                alert("Đăng nhập thất bại");
+            }
+        });
+    }
 }
 
 export default LoginComponent;

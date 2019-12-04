@@ -1,45 +1,72 @@
 import React from 'react';
 import '../Assets/signup.css';
-
+import $ from 'jquery';
+import Request from '../API/Request';
 class LearnRegisterComponent extends React.Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
         return (
-            <section class="signup">
-            <div class="container">
-                <div class="signup-content">
-                    <form method="POST" id="signup-form" class="signup-form" >
-                        <h2 class="form-title" style={{color: 'green' , fontFamily: 'JosefinSans-Bold'}} >Tạo tài khoản</h2>
-                        <div class="form-group">
-                            <input type="text" required class="form-input" name="name" id="name" placeholder="Họ và tên" minlength="6" maxlength="50"/>
+            <section className="signup">
+            <div className="container">
+                <div className="signup-content">
+                    <form method="POST" id="signup-form" className="signup-form" >
+                        <h2 className="form-title" style={{color: 'green' , fontFamily: 'JosefinSans-Bold'}} >Tạo tài khoản</h2>
+                        <div className="form-group">
+                            <input type="text" required className="form-input" name="name" id="name" placeholder="Họ và tên" minLength="6" maxLength="50"/>
                         </div>
-                        <div class="form-group">
-                            <input type="text" required class="form-input" name="phoneNumber" id="phoneNumber" placeholder="Số điện thoại" minlength="6" maxlength="50"/>
+                        <div className="form-group">
+                            <input type="text" required className="form-input" name="phoneNumber" id="phoneNumber" placeholder="Số điện thoại" minLength="6" maxLength="50"/>
                         </div>
-                        <div class="form-group">
-                            <input type="email" required class="form-input" name="email" id="email" placeholder="Email"/>
+                        <div className="form-group">
+                            <input type="email" required className="form-input" name="email" id="email" placeholder="Email"/>
                         </div>
-                        <div class="form-group">
-                            <input type="password" required minlength="6" class="form-input" name="password" id="password" placeholder="Mật khẩu"/>
-                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        <div className="form-group">
+                            <input type="password" required minLength="6" className="form-input" name="password" id="password" placeholder="Mật khẩu"/>
+                            <span toggle="#password" className="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
-                        <div class="form-group">
-                            <input type="password" required minlength="6" class="form-input" name="re_password" id="re_password" placeholder="Nhập lại mật khẩu"/>
+                        <div className="form-group">
+                            <input type="password" required minLength="6" className="form-input" name="re_password" id="re_password" placeholder="Nhập lại mật khẩu"/>
                         </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                            <label for="agree-term" class="label-agree-term"><span><span></span></span>Tôi đồng ý tất cả các  <a href="#" class="term-service">điều khoản dịch vụ</a></label>
+                        <div className="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" className="agree-term" />
+                            <label htmlFor="agree-term" className="label-agree-term"><span><span></span></span>Tôi đồng ý tất cả các  <a href="#" className="term-service">điều khoản dịch vụ</a></label>
                         </div>
-                        <div class="form-group">
-                            <input type="submit" name="submit" id="submit" class="form-submit" value="Đăng ký"/>
+                        <div className="form-group">
+                            <input type="submit" name="submit" id="submit" className="form-submit" value="Đăng ký" onClick={(e)=>this.handleSubmit(e)}/>
                         </div>
                     </form>
-                    <p class="loginhere">
-                        Bạn đã có tài khoản ? <a href="/login" class="loginhere-link">Đăng nhập</a>
+                    <p className="loginhere">
+                        Bạn đã có tài khoản ? <a href="/login" className="loginhere-link">Đăng nhập</a>
                     </p>
                 </div>
             </div>
         </section>
         );
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        let name = $('#name').val();
+        let email = $('#email').val();
+        let password = $('#password').val();
+        let phoneNumber = $('#phoneNumber').val();
+        Request.sendAPI('learner-register',{
+            name: name,
+            email: email,
+            password: password,
+            phoneNumber: phoneNumber
+        },(res)=>{
+            if(res.status === 200){
+                alert("Đăng ký thành công");
+                this.props.history.push('/login');
+            }
+            else{
+                alert("Đăng ký thất bại");
+            }
+        });
     }
 }
 
