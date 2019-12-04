@@ -12,7 +12,7 @@ class HomeComponent extends React.Component {
         return (
             <div className="homePage">
                 {this.renderRedirect()}
-                {this.role === "student " ? this.renderHeaderStudent() : this.renderHeaderTeacher()}
+                {this.role === "student" ? this.renderHeaderStudent() : this.renderHeaderTeacher()}
             </div>
         );
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import '../Assets/signup.css';
 import $ from 'jquery';
 import Request from '../API/Request';
-class LearnRegisterComponent extends React.Component {
+class TeacherRegisterComponent extends React.Component {
     constructor(props){
         super(props);
     }
@@ -16,6 +16,9 @@ class LearnRegisterComponent extends React.Component {
                         <h2 className="form-title" style={{color: 'green' , fontFamily: 'JosefinSans-Bold'}} >Tạo tài khoản</h2>
                         <div className="form-group">
                             <input type="text" required className="form-input" name="name" id="name" placeholder="Họ và tên" minLength="6" maxLength="50"/>
+                        </div>
+                        <div className="form-group">
+                            <input type="text" required className="form-input" name="subject" id="subject" placeholder="Môn giảng dạy" minLength="6" maxLength="50"/>
                         </div>
                         <div className="form-group">
                             <input type="text" required className="form-input" name="phoneNumber" id="phoneNumber" placeholder="Số điện thoại" minLength="6" maxLength="50"/>
@@ -53,12 +56,14 @@ class LearnRegisterComponent extends React.Component {
         let email = $('#email').val();
         let password = $('#password').val();
         let phoneNumber = $('#phoneNumber').val();
+        let subject = $('subject').val();
         Request.sendAPI('learner-register',{
             name: name,
             email: email,
             password: password,
-            role: 'student',
-            phoneNumber: phoneNumber
+            phoneNumber: phoneNumber,
+            role: 'teacher',
+            subject: subject
         },(res)=>{
             if(res.status === 200){
                 alert("Đăng ký thành công");
@@ -71,4 +76,4 @@ class LearnRegisterComponent extends React.Component {
     }
 }
 
-export default LearnRegisterComponent;
+export default TeacherRegisterComponent;
