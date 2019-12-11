@@ -1544,3 +1544,86 @@ div.search,form.search{
     padding: 3px;
     margin-bottom: 1px
 }
+.form-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.form-wrapper > span {
+  width: 20%;
+}
+.App{
+  width: 100vw;
+    height: 100vh;
+    background: linear-gradient(45deg, rgba(209,212,221,1) 0%, rgba(118,186,184,0.9948354341736695) 33%, rgba(108,217,144,1) 87%);
+}
+
+.logo-container{
+  border-bottom: 1px solid white;
+    margin: px;
+    padding-left: 100px;
+}
+
+.user-title{
+  font-size: 25px;
+  font-weight: bold;
+  color: blue;
+  display: inline-block;
+  margin-bottom: 30px;
+  margin-top:10px;
+}
+.user-info {
+  display: flex;
+}
+
+.user-image {
+  width: 30%;
+}
+
+.user-info-wrapper {
+  width: 100%;
+}
+
+.user-image > img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+}
+
+.content{
+	width: 450px;	
+	top: 250px;
+	left: 200px;
+  color: white
+}
+.content1{
+	width: 450px;	
+	position: absolute;
+	top: 180px;
+	left: 200px;
+	
+}
+.topcontent{
+	font-size: 46px;
+	line-height: 91px;
+}
+
+.topcontent span{
+	color: white;
+	font-size: 60px;
+}
+.description{
+  white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 59px !important;
+    overflow: hidden;
+    max-width: 200px;
+}
+
+
+.botcontent{
+	font-size: 25px;
+  line-height: 35px;
+  color: white;
+}

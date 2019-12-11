@@ -47,10 +47,10 @@ class AdminLoginComponent extends React.Component {
 
     handleLogin(e){
         e.preventDefault();
-        let email = $("#email");
-        let password = $("#password");
-
-        Request.sendAPI('login-admin',{
+        let email = $("#email").val();
+        let password = $("#password").val();
+        let request = new Request();
+        request.sendAPI('login-admin',{
             email: email,
             password: password,
         },(res)=>{

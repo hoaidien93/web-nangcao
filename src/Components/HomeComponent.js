@@ -1,138 +1,110 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import $ from 'jquery';
+import axios from 'axios';
+import Header from './HeaderComponent';
 class HomeComponent extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.role = localStorage.getItem("role");
-
+        this.token = localStorage.getItem("token");
+        if (this.token) {
+            axios.get("http://localhost:3000/user/info",
+                {
+                    headers: {
+                        Authorization: "Bearer " + this.token
+                    }
+                }).then((res) => {
+                    if (res.data.data) {
+                        this.role = res.data.data.role.name;
+                    }
+                    else {
+                        this.props.history.push('/login');
+                    }
+                });
+        }
     }
 
     render() {
         return (
             <div className="homePage">
-                {this.renderRedirect()}
-                {this.role === "student" ? this.renderHeaderStudent() : this.renderHeaderTeacher()}
+                {this.role !== "STUDENT" ?  this.renderHeaderTeacher() : this.renderHeaderStudent()}
             </div>
         );
     }
-    renderRedirect() {
-        let email = localStorage.getItem("email");
-        if (!email) {
-            return (<Redirect to='/login' />);
-        }
-        return;
-    }
+
+
     renderHeaderStudent() {
         return (
             <div>
-                <div className="header-area">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-8">
-                            
-                        </div>
-
-                        <div className="col-md-4">
-                        <div className="user-menu">
-                                <ul>
-                                    <li><a href="#o"><i className="fa fa-user"></i> Tài khoản của tôi</a></li>
-                                    <li><a href="#"><i className="fa fa-user"></i> Đăng xuất</a></li>
-                                </ul>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <div className="site-branding-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-6 m-0 p-0">
-                            <div className="logo">
-                                <h1><a href="/">My React Site</a></h1>
-                            </div>
-                        </div>
-
-                        <div className="col-sm-6">
-                            <div className="shopping-item">
-                                <a href="#">Mua Khóa Học<i className="fa fa-shopping-cart"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <Header></Header>
                 <div className="mainmenu-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="w-100 h-100">
-                            <ul className="nav navbar-nav d-flex">
-                                <li className="home active"><a href="#">Trang Chủ</a></li>
-                                <li className="product"><a href="#">Khóa học của tôi</a></li>
-                                <li className="cart"><a href="#">Danh sách khóa học</a></li>
-                                <li className="checkout"><a href="/#">Danh sách gia sư</a></li>
-                                <li className="search"><a href="#">Tìm kiếm</a></li>
-                            </ul>
+                    <div className="container">
+                        <div className="row">
+                            <div className="w-100 h-100">
+                                <ul className="nav navbar-nav d-flex" style={{ height: "53px", alignItems: "center" }}>
+                                    <li className="home active"><a href="#">Trang Chủ</a></li>
+                                    <li className="product"><a href="#">Khóa học của tôi</a></li>
+                                    <li className="cart"><a href="#">Danh sách khóa học</a></li>
+                                    <li className="checkout"><a href="/list-tutor">Danh sách gia sư</a></li>
+                                    <li className="search"><a href="#">Tìm kiếm</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+                <div style={{display: "flex", justifyContent: "space-around", marginTop: "50px"}}>
+                    <div class="content">
+                        <p class="topcontent"><span>100 </span>Tutor Online</p>
+                        <p class="botcontent">Learn for every situation</p>
+                        <p class="botcontent">Join today to get more knowledge</p>
+                        <div align="center">
+                            <a class="btn btn-primary" href="/register">Register Now</a>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="book.png" style={{width: '350px'}}></img>
+                    </div>
+                </div>
             </div>
         );
     }
 
-    renderHeaderTeacher(){
+    renderHeaderTeacher() {
         return (
             <div>
-                <div className="header-area">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-8">
-                        </div>
-
-                        <div className="col-md-4">
-                        <div className="user-menu">
-                                <ul>
-                                    <li><a href="/update-info"><i className="fa fa-user"></i> Tài khoản của tôi</a></li>
-                                    <li><a href="/logout"><i className="fa fa-user"></i> Đăng xuất</a></li>
+                <Header></Header>
+                <div className="mainmenu-area">
+                    <div className="container">
+                        <div className="row">
+                            <div className="w-100 h-100">
+                                <ul className="nav navbar-nav d-flex" style={{ height: "53px", alignItems: "center" }}>
+                                    <li className="home active"><a href="#">Trang Chủ</a></li>
+                                    <li className="product"><a href="#">Học sinh đang học</a></li>
+                                    <li className="cart"><a href="#">Quản lý khóa học</a></li>
+                                    <li className="checkout"><a href="/#">Thêm khóa học</a></li>
+                                    <li className="search"><a href="#">Tìm kiếm</a></li>
                                 </ul>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <div className="site-branding-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-sm-6 m-0 p-0">
-                            <div className="logo">
-                                <h1><a href="/">My React Site</a></h1>
                             </div>
                         </div>
-
-                        <div className="col-sm-6">
-                        </div>
                     </div>
                 </div>
-            </div>
-                <div className="mainmenu-area">
-                <div className="container">
-                    <div className="row">
-                        <div className="w-100 h-100">
-                            <ul className="nav navbar-nav d-flex">
-                                <li className="home active"><a href="#">Trang Chủ</a></li>
-                                <li className="product"><a href="#">Học sinh đang học</a></li>
-                                <li className="cart"><a href="#">Quản lý khóa học</a></li>
-                                <li className="checkout"><a href="/#">Thêm khóa học</a></li>
-                                <li className="search"><a href="#">Tìm kiếm</a></li>
-                            </ul>
+                <div style={{display: "flex", justifyContent: "space-around", marginTop: "50px"}}>
+                    <div class="content">
+                        <p class="topcontent"><span>100 </span>Turtor Online</p>
+                        <p class="botcontent">Learn for every situation</p>
+                        <p class="botcontent">Join today to get more knowledge</p>
+                        <div align="center">
+                            <a class="btn btn-primary" href="/register">Register Now</a>
                         </div>
                     </div>
+                    <div>
+                        <img src="book.png" style={{width: '350px'}}></img>
+                    </div>
                 </div>
-            </div> 
             </div>
         );
     }
+
 }
 
 export default HomeComponent;

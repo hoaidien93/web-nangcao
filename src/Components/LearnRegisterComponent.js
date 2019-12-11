@@ -53,12 +53,24 @@ class LearnRegisterComponent extends React.Component {
         let email = $('#email').val();
         let password = $('#password').val();
         let phoneNumber = $('#phoneNumber').val();
-        Request.sendAPI('learner-register',{
-            name: name,
-            email: email,
-            password: password,
-            role: 'student',
-            phoneNumber: phoneNumber
+        Request.sendAPI('user/register',{
+            "address": "",
+            "avatar": "",
+            "created": Date.now(),
+            "display_name": name,
+            "email": email,
+            "expired": 0,
+            "id": 0,
+            "password": "string",
+            "phone": "string",
+            "role": {
+                "id": 0,
+                "name": "string"
+            },
+            "role_id": 0,
+            "status": 0,
+            "updated": Date.now(),
+            "username": "string"
         },(res)=>{
             if(res.status === 200){
                 alert("Đăng ký thành công");

@@ -1,7 +1,8 @@
 import React from 'react';
 import '../Assets/login.css';
 import $ from 'jquery';
-import Request from '../API/Request';
+import axios from 'axios';
+
 
 class LoginComponent extends React.Component {
     constructor(props){
@@ -18,7 +19,7 @@ class LoginComponent extends React.Component {
                                 Đăng nhập
                             </span>
                             <div className="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
-                                <input required className="input100" type="text" name="username" id="email" placeholder="Email" />
+                                <input required className="input100" type="text" name="username" id="username" placeholder="Username" />
                                 <span className="focus-input100"></span>
                             </div>
                             <div className="wrap-input100 validate-input" data-validate="Please enter password">
@@ -50,23 +51,23 @@ class LoginComponent extends React.Component {
 
     handleLogin(e){
         e.preventDefault();
-        let email = $("#email");
-        let password = $("#password");
-
-        Request.sendAPI('login',{
-            email: email,
-            password: password,
-        },(res)=>{
-            if(res.status === 200){
-                window.localStorage.setItem('email',email);
-                window.localStorage.setItem('token',res.token);
-                window.localStorage.setItem('role',res.role);
+        
+        let username = $("#username").val();
+        let password = $("#password").val();
+        
+        axios.post("http://localhost:3000/login", {
+            username: username,
+            password: password
+        }).then((res)=>{
+            if(res.status === 200 && res.data.data){
+                window.localStorage.setItem('token',res.data.data);
+                alert("Dang nhap thanh cong");
                 this.props.history.push('/');
             }
             else{
                 alert("Đăng nhập thất bại");
             }
-        });
+        })
     }
 }
 
