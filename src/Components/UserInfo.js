@@ -4,17 +4,21 @@ import { Redirect } from 'react-router-dom';
 import Header from './HeaderComponent';
 import axios from 'axios';
 
-import  $ from 'jquery';
+import $ from 'jquery';
+import TagSkill from "./TagSkill";
 class UserInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInfo: {},
-            showAddSkill: false
+            userInfo: {
+                skills: []
+            },
+            showAddSkill: false,
+            listSkill: []
         };
         this.token = localStorage.getItem("token");
         if (this.token) {
-            axios.get("http://localhost:3000/user/info",
+            axios.get("http://localhost:8000/user/info",
                 {
                     headers: {
                         Authorization: "Bearer " + this.token
@@ -24,23 +28,32 @@ class UserInfo extends React.Component {
                         this.setState({
                             userInfo: res.data.data
                         })
-                        console.log(this.state.userInfo.skills);
                     }
                     else {
                         this.props.history.push('/login');
                     }
                 });
+
+                axios.post("http://localhost:8000/user/list-skill").then((res)=>{
+                    console.log(res.data.data);
+
+                    this.setState({
+                        listSkill: res.data.data
+                    })
+                })
         }
+       
         else {
             this.props.history.push('/login');
         }
+
     }
 
     render() {
         return (
             <div className="homePage">
                 {this.renderRedirect()}
-                {this.role === "STUDENT" ? this.renderInfoStudent() : this.renderInfoTeacher()}
+                {this.role_id === 1 ? this.renderInfoStudent() : this.renderInfoTeacher()}
             </div>
         );
     }
@@ -84,26 +97,34 @@ class UserInfo extends React.Component {
                         </div>
                         <div className="form-wrapper">
                             <span>Kỹ năng</span>
-                            <div className="form-control" >
-                                {
-                                    this.state.userInfo.skills && this.state.userInfo.skills.map(element => {
-                                        return (
-                                            <span class="skill">{element}</span>
-                                        );
-                                    })
-                                }
-                                <div align="right">
+                            <div className="form-control" style={{
+                                height: "max-content",
+                                display: "flex",
+                                position: "relative"
+                            }}>
+                                {this.renderSkill(this.state.userInfo.skills)}
+                                <div style={{
+                                    position: "absolute",
+                                    top: "12px",
+                                    right: "10px"
+                                }}>
                                     <i className="fas fa-plus" style={{ color: 'blue', cursor: 'pointer' }} onClick={(e) => this.addSkill(e)}> </i>
                                 </div>
                             </div>
                         </div>
-                        <div style={{display: this.state.showAddSkill?"block" : "none"}}>
+                        <div style={{ display: this.state.showAddSkill ? "block" : "none" }}>
                             <div className="form-wrapper">
                                 <span></span>
-                                <input type="text" className="form-control" id="skill"></input>
+                                <select name="skill" className="form-control" id="skill">
+                                    {this.state.listSkill.map((e,index)=>{
+                                        return(
+                                            <option key={index} value={e.id}>{e.name}</option>
+                                        );
+                                    })}
+                                </select>
                             </div>
                             <div align="right">
-                            <button className="btn btn-primary mb-2" onClick={(e)=> this.btnAddSkill()}>Add skill</button>
+                                <button className="btn btn-primary mb-2" onClick={(e) => this.btnAddSkill()}>Add skill</button>
                             </div>
                         </div>
                         <div className="form-wrapper">
@@ -135,8 +156,7 @@ class UserInfo extends React.Component {
 
     saveChanged(e) {
         let userInfo = this.state.userInfo;
-        console.log(userInfo);
-        axios.post("http://localhost:3000/user/update", {
+        axios.post("http://localhost:8000/user/update", {
             ...userInfo
         }, {
             headers: {
@@ -155,14 +175,31 @@ class UserInfo extends React.Component {
         });
     }
 
-    btnAddSkill(e){
+    renderSkill(listSkill) {
+        return (
+            <div>{listSkill.map((el, index) => {
+                return (<TagSkill key={index} skill={el.name}></TagSkill>)
+            })}
+            </div>
+        );
+
+    }
+
+    btnAddSkill(e) {
         let skill = $("#skill").val();
-        let userInfo = this.state.userInfo;
-        userInfo.skills.push(skill);
         this.setState({
-            userInfo: userInfo,
             showAddSkill: false
         });
+
+        axios.post("http://localhost:8000/user/add-skill",{
+            "skill_ids": [skill]
+        },{
+            headers: {
+                Authorization: "Bearer " + this.token
+            }
+        }).then(function(res){
+            window.location.reload();
+        })
     }
 }
 

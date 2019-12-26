@@ -1010,7 +1010,7 @@ width: 10px;
     filter: alpha(opacity=0);
 }
 .signup-content{
-  margin-top: 45px !important;
+  padding-top: 45px !important;
 }
 .footer-card-icon {
   font-size: 30px;
@@ -1554,7 +1554,7 @@ div.search,form.search{
 }
 .App{
   width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(45deg, rgba(209,212,221,1) 0%, rgba(118,186,184,0.9948354341736695) 33%, rgba(108,217,144,1) 87%);
 }
 
@@ -1587,6 +1587,7 @@ div.search,form.search{
 .user-image > img {
   width: 200px;
   height: 200px;
+  padding: 10px;
   border-radius: 50%;
   border: 1px solid #fff;
 }
@@ -1626,4 +1627,19 @@ div.search,form.search{
 	font-size: 25px;
   line-height: 35px;
   color: white;
+}
+.contract-table{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: flex-start;
+}
+
+.contract-table > span{
+  text-align: left;
+  width: 15%;
+}
+
+.ta-left{
+  text-align: left;
 }

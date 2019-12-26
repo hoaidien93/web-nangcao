@@ -1,5 +1,11 @@
 import React from 'react';
 class HeaderComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.token = localStorage.getItem("token");
+
+    }
+
     render() {
         return (
             <div>
@@ -12,7 +18,7 @@ class HeaderComponent extends React.Component {
                                 <div className="user-menu">
                                     <ul>
                                         <li><a href="/user-info"><i className="fa fa-user"></i> Tài khoản của tôi</a></li>
-                                        <li><a href="/logout"><i className="fa fa-user"></i> Đăng xuất</a></li>
+                                        <li><a href="#" onClick={(e) => this.handleLogout(e)}><i className="fa fa-user"></i> Đăng xuất</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -34,6 +40,28 @@ class HeaderComponent extends React.Component {
                     </div>
                 </div>
             </div>
+        );
+    }
+
+    handleLogout(e) {
+        e.preventDefault();
+        localStorage.clear();
+        window.location.href = '/login';
+    }
+
+    renderLogin() {
+        if (this.token) {
+            return (
+                <ul>
+                    <li><a href="/user-info"><i className="fa fa-user"></i> Tài khoản của tôi</a></li>
+                    <li><a href="#" onClick={(e) => this.handleLogout(e)}><i className="fa fa-user"></i> Đăng xuất</a></li>
+                </ul>
+            );
+        }
+        return (
+            <ul>
+                <li><a href="/user-info"><i className="fa fa-user"></i> Đăng nhập</a></li>
+            </ul>
         );
     }
 }

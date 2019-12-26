@@ -3,19 +3,24 @@ import { Redirect } from 'react-router-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import Header from './HeaderComponent';
+import MainMenu from './MainMenu';
 class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
         this.token = localStorage.getItem("token");
+        this.state = {
+        }
         if (this.token) {
-            axios.get("http://localhost:3000/user/info",
+            axios.get("http://localhost:8000/user/info",
                 {
                     headers: {
                         Authorization: "Bearer " + this.token
                     }
                 }).then((res) => {
                     if (res.data.data) {
-                        this.role = res.data.data.role.name;
+                        this.setState({
+                            role: res.data.data.role.name
+                        });
                     }
                     else {
                         this.props.history.push('/login');
@@ -27,7 +32,7 @@ class HomeComponent extends React.Component {
     render() {
         return (
             <div className="homePage">
-                {this.role !== "STUDENT" ?  this.renderHeaderTeacher() : this.renderHeaderStudent()}
+                {this.state.role === "TUTOR" ?  this.renderHeaderTeacher() : this.renderHeaderStudent()}
             </div>
         );
     }
@@ -37,28 +42,14 @@ class HomeComponent extends React.Component {
         return (
             <div>
                 <Header></Header>
-                <div className="mainmenu-area">
-                    <div className="container">
-                        <div className="row">
-                            <div className="w-100 h-100">
-                                <ul className="nav navbar-nav d-flex" style={{ height: "53px", alignItems: "center" }}>
-                                    <li className="home active"><a href="#">Trang Chủ</a></li>
-                                    <li className="product"><a href="#">Khóa học của tôi</a></li>
-                                    <li className="cart"><a href="#">Danh sách khóa học</a></li>
-                                    <li className="checkout"><a href="/list-tutor">Danh sách gia sư</a></li>
-                                    <li className="search"><a href="#">Tìm kiếm</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <MainMenu></MainMenu>
                 <div style={{display: "flex", justifyContent: "space-around", marginTop: "50px"}}>
-                    <div class="content">
-                        <p class="topcontent"><span>100 </span>Tutor Online</p>
-                        <p class="botcontent">Learn for every situation</p>
-                        <p class="botcontent">Join today to get more knowledge</p>
+                    <div className="content">
+                        <p className="topcontent"><span>100 </span>Tutor Online</p>
+                        <p className="botcontent">Learn for every situation</p>
+                        <p className="botcontent">Join today to get more knowledge</p>
                         <div align="center">
-                            <a class="btn btn-primary" href="/register">Register Now</a>
+                            <a className="btn btn-primary" href="/register">Register Now</a>
                         </div>
                     </div>
                     <div>
@@ -89,12 +80,12 @@ class HomeComponent extends React.Component {
                     </div>
                 </div>
                 <div style={{display: "flex", justifyContent: "space-around", marginTop: "50px"}}>
-                    <div class="content">
-                        <p class="topcontent"><span>100 </span>Turtor Online</p>
-                        <p class="botcontent">Learn for every situation</p>
-                        <p class="botcontent">Join today to get more knowledge</p>
+                    <div className="content">
+                        <p className="topcontent"><span>100 </span>Turtor Online</p>
+                        <p className="botcontent">Learn for every situation</p>
+                        <p className="botcontent">Join today to get more knowledge</p>
                         <div align="center">
-                            <a class="btn btn-primary" href="/register">Register Now</a>
+                            <a className="btn btn-primary" href="/register">Register Now</a>
                         </div>
                     </div>
                     <div>

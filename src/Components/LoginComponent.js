@@ -38,7 +38,7 @@ class LoginComponent extends React.Component {
                                 <span className="txt1 p-b-9">
                                     Bạn chưa có tài khoản ?
 						        </span>
-                                <a href="/register" className="txt3">
+                                <a href="/register" className="txt3 mr-5">
                                     Đăng ký
 						        </a>
                             </div>
@@ -55,13 +55,13 @@ class LoginComponent extends React.Component {
         let username = $("#username").val();
         let password = $("#password").val();
         
-        axios.post("http://localhost:3000/login", {
+        axios.post("http://localhost:8000/login", {
             username: username,
             password: password
         }).then((res)=>{
             if(res.status === 200 && res.data.data){
                 window.localStorage.setItem('token',res.data.data);
-                alert("Dang nhap thanh cong");
+                alert("Đăng nhập thành công");
                 this.props.history.push('/');
             }
             else{

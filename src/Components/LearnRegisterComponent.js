@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Assets/signup.css';
 import $ from 'jquery';
-import Request from '../API/Request';
+import axios from 'axios';
 class LearnRegisterComponent extends React.Component {
     constructor(props){
         super(props);
@@ -14,6 +14,15 @@ class LearnRegisterComponent extends React.Component {
                 <div className="signup-content">
                     <form method="POST" id="signup-form" className="signup-form" >
                         <h2 className="form-title" style={{color: 'green' , fontFamily: 'JosefinSans-Bold'}} >Tạo tài khoản</h2>
+                        <div className="form-group">
+                            <input type="text" required className="form-input" name="username" id="username" placeholder="Username" minLength="6" maxLength="50"/>
+                        </div>
+                        <div className="form-group">
+                            <select className="form-input" name="role" id="role" placeholder="Vai trò">
+                                <option value="1">Người học</option>
+                                <option value="2">Người dạy</option>
+                            </select>
+                        </div>
                         <div className="form-group">
                             <input type="text" required className="form-input" name="name" id="name" placeholder="Họ và tên" minLength="6" maxLength="50"/>
                         </div>
@@ -53,33 +62,27 @@ class LearnRegisterComponent extends React.Component {
         let email = $('#email').val();
         let password = $('#password').val();
         let phoneNumber = $('#phoneNumber').val();
-        Request.sendAPI('user/register',{
-            "address": "",
-            "avatar": "",
-            "created": Date.now(),
+        let username = $('#username').val();
+        let role = $("#role").val();
+        let data = {
             "display_name": name,
             "email": email,
-            "expired": 0,
-            "id": 0,
-            "password": "string",
-            "phone": "string",
-            "role": {
-                "id": 0,
-                "name": "string"
-            },
-            "role_id": 0,
-            "status": 0,
-            "updated": Date.now(),
-            "username": "string"
-        },(res)=>{
-            if(res.status === 200){
+            "password": password,
+            "phone": phoneNumber,
+            "username": username,
+            "role_id" : role
+        };
+        axios.post("http://localhost:8000/user/register",data).then((res) => {
+            if(!res.data.code){
                 alert("Đăng ký thành công");
                 this.props.history.push('/login');
             }
             else{
                 alert("Đăng ký thất bại");
             }
-        });
+        })
+       
+            
     }
 }
 
