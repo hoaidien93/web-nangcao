@@ -4,6 +4,7 @@ import $ from 'jquery';
 import axios from 'axios';
 import Header from './HeaderComponent';
 import MainMenu from './MainMenu';
+import ChatComponent from './ChatComponent';
 class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -21,6 +22,9 @@ class HomeComponent extends React.Component {
                         this.setState({
                             role: res.data.data.role.name
                         });
+                        localStorage.setItem("role",this.state.role);
+                        localStorage.setItem("username",res.data.data.username);
+                        localStorage.setItem("id_user",res.data.data.id);
                     }
                     else {
                         this.props.history.push('/login');
@@ -71,7 +75,7 @@ class HomeComponent extends React.Component {
                                 <ul className="nav navbar-nav d-flex" style={{ height: "53px", alignItems: "center" }}>
                                     <li className="home active"><a href="#">Trang Chủ</a></li>
                                     <li className="product"><a href="#">Học sinh đang học</a></li>
-                                    <li className="cart"><a href="#">Quản lý khóa học</a></li>
+                                    <li className="cart"><a href="/manage-contract">Quản lý khóa học</a></li>
                                     <li className="checkout"><a href="/#">Thêm khóa học</a></li>
                                     <li className="search"><a href="#">Tìm kiếm</a></li>
                                 </ul>
@@ -92,6 +96,7 @@ class HomeComponent extends React.Component {
                         <img src="book.png" style={{width: '350px'}}></img>
                     </div>
                 </div>
+                <ChatComponent></ChatComponent>
             </div>
         );
     }

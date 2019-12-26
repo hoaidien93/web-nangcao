@@ -5,6 +5,7 @@ import axios from 'axios';
 import Header from './HeaderComponent';
 import TagSkill from './TagSkill';
 import MainMenu from './MainMenu';
+import ChatComponent from './ChatComponent';
 
 class DetailContract extends React.Component {
     constructor(props) {
@@ -24,8 +25,8 @@ class DetailContract extends React.Component {
                     Authorization: "Bearer " + this.token
                 }
             }).then((res) => {
-                console.log(res);
                 this.setState({ userInfo: res.data.data });
+                localStorage.setItem("patternId",res.data.data.tutor_id);
             });
         }
     }
@@ -83,6 +84,7 @@ class DetailContract extends React.Component {
                     </div>
 
                 </div>
+                <ChatComponent></ChatComponent>
             </div>
         )
     }

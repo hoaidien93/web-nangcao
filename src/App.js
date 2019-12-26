@@ -11,7 +11,7 @@ import ListTuTor from './Components/ListTutor';
 import DetailTutor from './Components/DetailTutor';
 import StudentContract from './Components/StudentContract';
 import DetailContract from './Components/DetailContract';
-
+import ManageContract from './Components/ManageContract';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function App() {
@@ -26,8 +26,9 @@ function App() {
           <Route path='/user-info' component = {UserInfo} />
           <Route path="/list-tutor" component = {ListTuTor}/>
           <Route path="/detail-tutor/:id" component = {DetailTutor}/>
-          <Route path="/detail-contract/:id" component = {DetailContract} />\
+          <Route path="/detail-contract/:id" component = {DetailContract} />
           <Route path="/student-contract" component= {StudentContract} />
+          <Route path="/manage-contract" component = {ManageContract} />
           <Route path='/' component={HomeComponent} />
         </Switch>
       </Router>

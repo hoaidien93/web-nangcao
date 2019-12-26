@@ -17,6 +17,7 @@ class UserInfo extends React.Component {
             listSkill: []
         };
         this.token = localStorage.getItem("token");
+        this.role = localStorage.getItem("role");
         if (this.token) {
             axios.get("http://localhost:8000/user/info",
                 {
@@ -35,8 +36,6 @@ class UserInfo extends React.Component {
                 });
 
                 axios.post("http://localhost:8000/user/list-skill").then((res)=>{
-                    console.log(res.data.data);
-
                     this.setState({
                         listSkill: res.data.data
                     })
@@ -53,7 +52,7 @@ class UserInfo extends React.Component {
         return (
             <div className="homePage">
                 {this.renderRedirect()}
-                {this.role_id === 1 ? this.renderInfoStudent() : this.renderInfoTeacher()}
+                {this.role === "STUDENT" ? this.renderInfoStudent() : this.renderInfoTeacher()}
             </div>
         );
     }
@@ -142,7 +141,62 @@ class UserInfo extends React.Component {
     }
 
     renderInfoStudent() {
-        return (<div>Student</div>);
+        return (<div>
+            <Header></Header>
+            <span className="user-title">Thông tin Cá Nhân</span>
+            <div className="w-75 m-auto">
+                <div className="user-info">
+                    <div className="user-image">
+                        <img src={this.state.userInfo.avatar ? this.state.userInfo.avatar : "no-avatar.png"}></img>
+                        <div className="mt-1">
+                            <div>{this.state.userInfo.username}</div>
+                        </div>
+                    </div>
+                    <div className="user-info-wrapper">
+                        <div className="form-wrapper">
+                            <span>Họ và tên</span>
+                            <input className="form-control" type="text" name="display_name" onChange={(e) => this.handleChange(e)} value={this.state.userInfo.display_name}></input>
+                        </div>
+                        <div className="form-wrapper">
+                            <span>Email</span>
+                            <input className="form-control" type="text" name="email" onChange={(e) => this.handleChange(e)} value={this.state.userInfo.email}></input>
+                        </div>
+                        <div className="form-wrapper">
+                            <span>Nơi ở</span>
+                            <input className="form-control" type="text" name="address" onChange={(e) => this.handleChange(e)} value={this.state.userInfo.address}></input>
+                        </div>
+                        <div className="form-wrapper">
+                            <span>Link avatar</span>
+                            <input className="form-control" type="text" name="avatar" onChange={(e) => this.handleChange(e)} value={this.state.userInfo.avatar}></input>
+                        </div>
+                       
+                        <div style={{ display: this.state.showAddSkill ? "block" : "none" }}>
+                            <div className="form-wrapper">
+                                <span></span>
+                                <select name="skill" className="form-control" id="skill">
+                                    {this.state.listSkill.map((e,index)=>{
+                                        return(
+                                            <option key={index} value={e.id}>{e.name}</option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div align="right">
+                                <button className="btn btn-primary mb-2" onClick={(e) => this.btnAddSkill()}>Add skill</button>
+                            </div>
+                        </div>
+                        <div className="form-wrapper">
+                            <span>Giới Thiệu</span>
+                            <textarea className="form-control" name="description" onChange={(e) => this.handleChange(e)} value={this.state.userInfo.description}>
+
+                            </textarea>
+                        </div>
+                        <button className="btn btn-primary" onClick={(e) => this.saveChanged(e)}>Lưu thay đổi</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>);
     }
 
     handleChange(e) {
@@ -163,7 +217,7 @@ class UserInfo extends React.Component {
                 Authorization: "Bearer " + this.token
             }
         }).then((res) => {
-            if (res.data.message === "Success")
+            if (!res.data.code)
                 alert("Cập nhật thành công");
         })
     }

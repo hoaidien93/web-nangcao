@@ -5,6 +5,7 @@ import axios from 'axios';
 import Header from './HeaderComponent';
 import TagSkill from './TagSkill';
 import MainMenu from './MainMenu';
+import ChatComponent from './ChatComponent';
 
 class DetailTutor extends React.Component {
     constructor(props) {
