@@ -33,7 +33,7 @@ class ManageContract extends React.Component {
         return (
             <div>
                 <Header></Header>
-                <MainMenu></MainMenu>
+                <MainMenu role="TUTOR"></MainMenu>
                 <div style={{ width: "80%", margin: "auto", marginTop: "50px" }}>
                     <h3 style={{ marginBottom: "20px", color: "blue" }}>Danh sách hợp đồng</h3>
                     <table className="table table-dark">

@@ -69,7 +69,7 @@ class ListTuTor extends React.Component {
 
     renderSkill(listSkill){
         return(
-            <div>{listSkill.map((el,index)=> {
+            <div style={{display: "flex",flexWrap: "wrap"}}>{listSkill.map((el,index)=> {
                     return (<TagSkill key={index} skill={el.name}></TagSkill>)
                 })}
             </div>

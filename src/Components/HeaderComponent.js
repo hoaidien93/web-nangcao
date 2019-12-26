@@ -3,7 +3,7 @@ class HeaderComponent extends React.Component {
     constructor(props) {
         super(props);
         this.token = localStorage.getItem("token");
-
+        console.log(this.token);
     }
 
     render() {
@@ -14,12 +14,11 @@ class HeaderComponent extends React.Component {
                         <div className="row">
                             <div className="col-md-8">
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4" style={{textAlign: 'right'}}>
                                 <div className="user-menu">
-                                    <ul>
-                                        <li><a href="/user-info"><i className="fa fa-user"></i> Tài khoản của tôi</a></li>
-                                        <li><a href="#" onClick={(e) => this.handleLogout(e)}><i className="fa fa-user"></i> Đăng xuất</a></li>
-                                    </ul>
+                                    {
+                                        this.renderLogin()
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -50,7 +49,8 @@ class HeaderComponent extends React.Component {
     }
 
     renderLogin() {
-        if (this.token) {
+        if (this.token !== null) {
+            console.log("go herre");
             return (
                 <ul>
                     <li><a href="/user-info"><i className="fa fa-user"></i> Tài khoản của tôi</a></li>
@@ -58,11 +58,15 @@ class HeaderComponent extends React.Component {
                 </ul>
             );
         }
-        return (
-            <ul>
-                <li><a href="/user-info"><i className="fa fa-user"></i> Đăng nhập</a></li>
-            </ul>
-        );
+        else {
+            console.log("go herre2");
+
+            return (
+                <ul>
+                    <li><a href="/user-info"><i className="fa fa-user"></i> Đăng nhập</a></li>
+                </ul>
+            );
+        }
     }
 }
 

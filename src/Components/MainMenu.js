@@ -11,6 +11,14 @@ class MainMenu extends React.Component {
 
     render() {
         return (
+            <div>
+                {this.props.role === "TUTOR" ? this.renderTeacher():  this.renderStudent()}
+            </div>
+        );
+    }
+
+    renderStudent() {
+        return (
             <div className="mainmenu-area">
                 <div className="container">
                     <div className="row">
@@ -20,6 +28,26 @@ class MainMenu extends React.Component {
                                 <li className="product"><a href="/student-contract">Khóa học của tôi</a></li>
                                 <li className="cart"><a href="#">Danh sách khóa học</a></li>
                                 <li className="checkout"><a href="/list-tutor">Danh sách gia sư</a></li>
+                                <li className="search"><a href="#">Tìm kiếm</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    renderTeacher() {
+        return (
+            <div className="mainmenu-area">
+                <div className="container">
+                    <div className="row">
+                        <div className="w-100 h-100">
+                            <ul className="nav navbar-nav d-flex" style={{ height: "53px", alignItems: "center" }}>
+                                <li className="home active"><a href="#">Trang Chủ</a></li>
+                                <li className="cart"><a href="/manage-contract">Quản lý khóa học</a></li>
+                                <li className="product"><a href="/statistic-revenue">Thống kê doanh thu</a></li>
+                                <li className="checkout"><a href="/#">Thêm khóa học</a></li>
                                 <li className="search"><a href="#">Tìm kiếm</a></li>
                             </ul>
                         </div>

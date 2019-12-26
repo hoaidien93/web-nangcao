@@ -15,17 +15,23 @@ class ChatComponent extends React.Component {
         }
 
         let socket = io.connect(this.state.endPoint);
-        socket.on('connect', () => {
-            socket.emit('register', { socketId: socket.id, username: localStorage.getItem("username"), id: localStorage.getItem("id_user") });
-            socket.on('newMessage', (data) => {
-                console.log(data);
-                localStorage.setItem("patternId",data.fromID);
-                $(".chat-message").append("<p class='message-chat'><span class='c-blue'>" + data.from + "</span>: " + data.message + "</p>");
-                $(".chat-message").scrollTop(9999);
-            });
-        });
+        let token = localStorage.getItem("token");
+        if (localStorage.getItem("id_user")) {
+            socket.on('connect', () => {
+                socket.emit('register', {
+                    socketId: socket.id,
+                    username: localStorage.getItem("username"),
+                    id: localStorage.getItem("id_user")
+                });
 
-        
+                socket.on('newMessage', (data) => {
+                    localStorage.setItem("patternId", data.fromID);
+                    $(".chat-message").append("<p class='message-chat'><span class='c-blue'>" + data.from + "</span>: " + data.message + "</p>");
+                    $(".chat-message").scrollTop(9999);
+                });
+            });
+        }
+
     }
     toggleChat() {
         let toggle = !this.state.isShowChat;

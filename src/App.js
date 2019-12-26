@@ -12,6 +12,9 @@ import DetailTutor from './Components/DetailTutor';
 import StudentContract from './Components/StudentContract';
 import DetailContract from './Components/DetailContract';
 import ManageContract from './Components/ManageContract';
+import StatisticRevenue from './Components/StatisticRevenue';
+import ForgotPassword from './Components/ForgotPassword';
+
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function App() {
@@ -29,6 +32,8 @@ function App() {
           <Route path="/detail-contract/:id" component = {DetailContract} />
           <Route path="/student-contract" component= {StudentContract} />
           <Route path="/manage-contract" component = {ManageContract} />
+          <Route path="/statistic-revenue" component = {StatisticRevenue} />
+          <Route path="/forgot-password" component = {ForgotPassword} />
           <Route path='/' component={HomeComponent} />
         </Switch>
       </Router>

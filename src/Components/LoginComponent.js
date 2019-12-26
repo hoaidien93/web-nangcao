@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 class LoginComponent extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
@@ -27,10 +27,10 @@ class LoginComponent extends React.Component {
                                 <span className="focus-input100"></span>
                             </div>
                             <div className="text-right p-t-13 p-b-23">
-                               
+
                             </div>
                             <div className="container-login100-form-btn">
-                                <button className="login100-form-btn" onClick={(e)=>this.handleLogin(e)}>
+                                <button className="login100-form-btn" onClick={(e) => this.handleLogin(e)}>
                                     Đăng nhập
 						        </button>
                             </div>
@@ -38,9 +38,14 @@ class LoginComponent extends React.Component {
                                 <span className="txt1 p-b-9">
                                     Bạn chưa có tài khoản ?
 						        </span>
-                                <a href="/register" className="txt3 mr-5">
-                                    Đăng ký
+                                <div>
+                                    <a href="/register" className="txt3 mr-3">
+                                        Đăng ký
 						        </a>
+                                    <a href="/forgot-password" className="txt3">
+                                        Quên mật khẩu
+						        </a>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -49,22 +54,22 @@ class LoginComponent extends React.Component {
         );
     }
 
-    handleLogin(e){
+    handleLogin(e) {
         e.preventDefault();
-        
+
         let username = $("#username").val();
         let password = $("#password").val();
-        
+
         axios.post("http://localhost:8000/login", {
             username: username,
             password: password
-        }).then((res)=>{
-            if(res.status === 200 && res.data.data){
-                window.localStorage.setItem('token',res.data.data);
+        }).then((res) => {
+            if (res.status === 200 && res.data.data) {
+                window.localStorage.setItem('token', res.data.data);
                 alert("Đăng nhập thành công");
                 this.props.history.push('/');
             }
-            else{
+            else {
                 alert("Đăng nhập thất bại");
             }
         })

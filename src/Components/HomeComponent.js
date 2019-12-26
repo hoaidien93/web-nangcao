@@ -46,7 +46,7 @@ class HomeComponent extends React.Component {
         return (
             <div>
                 <Header></Header>
-                <MainMenu></MainMenu>
+                <MainMenu role="STUDENT"></MainMenu>
                 <div style={{display: "flex", justifyContent: "space-around", marginTop: "50px"}}>
                     <div className="content">
                         <p className="topcontent"><span>100 </span>Tutor Online</p>
@@ -60,6 +60,8 @@ class HomeComponent extends React.Component {
                         <img src="book.png" style={{width: '350px'}}></img>
                     </div>
                 </div>
+                <ChatComponent></ChatComponent>
+
             </div>
         );
     }
@@ -68,21 +70,7 @@ class HomeComponent extends React.Component {
         return (
             <div>
                 <Header></Header>
-                <div className="mainmenu-area">
-                    <div className="container">
-                        <div className="row">
-                            <div className="w-100 h-100">
-                                <ul className="nav navbar-nav d-flex" style={{ height: "53px", alignItems: "center" }}>
-                                    <li className="home active"><a href="#">Trang Chủ</a></li>
-                                    <li className="product"><a href="#">Học sinh đang học</a></li>
-                                    <li className="cart"><a href="/manage-contract">Quản lý khóa học</a></li>
-                                    <li className="checkout"><a href="/#">Thêm khóa học</a></li>
-                                    <li className="search"><a href="#">Tìm kiếm</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <MainMenu role="TUTOR"></MainMenu>
                 <div style={{display: "flex", justifyContent: "space-around", marginTop: "50px"}}>
                     <div className="content">
                         <p className="topcontent"><span>100 </span>Turtor Online</p>

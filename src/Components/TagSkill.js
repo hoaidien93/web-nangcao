@@ -19,8 +19,11 @@ class TagSkill extends React.Component {
                 "color": "white",
                 "padding": "4px 3px",
                 "width": "100px",
-                "display" : "inline-block",
-                "margin" : "3px 2px"
+                "display" : "inline-flex",
+                "margin" : "3px 2px",
+                "height": "58px",
+                "justifyContent": "center",
+                "alignItems": "center"
             }}>{this.props.skill}</div>
         );
     }
